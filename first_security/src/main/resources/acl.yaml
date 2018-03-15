@@ -1,0 +1,8 @@
+testuser:
+  type: privilege
+  level: 9999
+  
+testpermission:
+  type: permission
+  dynamic: false
+  
