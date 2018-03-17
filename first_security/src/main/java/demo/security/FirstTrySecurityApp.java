@@ -2,9 +2,11 @@ package demo.security;
 
 
 import static act.controller.Controller.Util.render;
+import static act.controller.Controller.Util.redirect;
 
 import org.osgl.aaa.AAA;
 import org.osgl.aaa.NoAuthentication;
+import org.osgl.aaa.RequireAuthentication;
 import org.osgl.mvc.annotation.GetAction;
 
 import act.Act;
@@ -28,10 +30,24 @@ public class FirstTrySecurityApp {
     	context.loginAndRedirect("testuser", "/");
     }
 
-    @GetAction("/restrict")
-    public void restrict() {
+    @GetAction("/back")
+    @NoAuthentication
+    public void back(ActionContext context) {
+    	context.logout();
     	
-    	AAA.requirePermission("testpermission");
+    	redirect("/");
+    }
+
+    @GetAction("/restrict")
+    @NoAuthentication
+    public void restrict(ActionContext context) {
+
+//    	AAA.requirePermission("testpermission");
+    	boolean hasPermission = AAA.hasPermission("testpermission");
+    	if(!hasPermission) {
+    		context.param("restrictmessage", "sorry, no permission");
+    		redirect("/");
+    	}
     	
     	render("restrict.html");
     }
