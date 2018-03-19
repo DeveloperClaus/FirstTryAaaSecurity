@@ -1,10 +1,10 @@
 package demo.security;
 
-import java.util.Set;
-
+import act.aaa.ActAAAService;
+import act.validation.Password;
 import org.osgl.util.C;
 
-import act.aaa.ActAAAService;
+import java.util.Set;
 
 public class FirstTryAaaSecurity extends ActAAAService.Base<TupleUser> {
 
@@ -17,6 +17,6 @@ public class FirstTryAaaSecurity extends ActAAAService.Base<TupleUser> {
     
     @Override
     protected boolean verifyPassword(TupleUser user, char[] password) {
-    	return true;
+    	return Password.Verifier.verifyPassword(password, user);
     }
 }

@@ -9,7 +9,6 @@
   <version>0.0.1</version>
 
   <name>first try aaa</name>
-  <description></description>
   <url>http://noch_unklar.de/</url>
 
   <parent>
@@ -34,7 +33,7 @@
     </dependency>
     <dependency>
       <groupId>org.actframework</groupId>
-      <artifactId>act-aaa</artifactId>
+      <artifactId>act-starter-morphia-aaa</artifactId>
     </dependency>
   </dependencies>
 </project>
