@@ -1,26 +1,19 @@
 package demo.security;
 
 
-import static act.controller.Controller.Util.render;
 import static act.controller.Controller.Util.redirect;
-
-import org.osgl.aaa.AAA;
-import org.osgl.aaa.NoAuthentication;
-import org.osgl.aaa.RequireAuthentication;
-import org.osgl.mvc.annotation.GetAction;
+import static act.controller.Controller.Util.render;
 
 import act.Act;
 import act.app.ActionContext;
+import org.osgl.aaa.AAA;
+import org.osgl.aaa.NoAuthentication;
+import org.osgl.mvc.annotation.GetAction;
 
 public class FirstTrySecurityApp {
 
     @GetAction
-    //@NonBlock
-    //@NoImplicitTemplateVariable
-    //@SessionFree
-    @NoAuthentication
     public void home() {
-    	
         render("home.html");
     }
     

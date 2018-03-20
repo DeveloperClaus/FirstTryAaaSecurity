@@ -1,29 +1,39 @@
 package demo.security;
 
-public class TupleUser {
+import act.cli.Command;
+import act.cli.Required;
+import act.db.morphia.MorphiaAdaptiveRecord;
+import act.db.morphia.MorphiaDao;
+import act.validation.Password;
 
-	private String m_userId;
-	private String m_password;
-	
-	public TupleUser(String pUserId, String pPassword) {
+public class TupleUser extends MorphiaAdaptiveRecord<TupleUser> {
 
-		setUserId(pUserId);
-	}
-	
-	public String getUserId() {
-		return m_userId;
-	}
-	
-	public void setUserId(String pUserId) {
-		m_userId = pUserId;
-	}
-	
-	public String getPassword() {
-		return m_password;
-	}
-	
-	public void setPassword(String pPassword) {
-		m_password = pPassword;
-	}
-	
+	public String userId;
+	@Password
+	public char[] password;
+
+
+	public static class Dao extends MorphiaDao<TupleUser> {
+
+        @Command(name = "user.create", help = "Create new user")
+        public void createUser(
+                @Required("specify username") String username,
+                @Required("specify password") char[] password
+        ) {
+            TupleUser user = new TupleUser();
+            user.userId = username;
+            user.password = password;
+            save(user);
+        }
+
+        public TupleUser findByUsername(String username) {
+            return findOneBy("userId", username);
+        }
+
+        public TupleUser authenticate(String username, char[] password) {
+            TupleUser user = findByUsername(username);
+            return null != user ? Password.Verifier.verifyPassword(password, user) ? user : null : null;
+        }
+
+    }
 }
