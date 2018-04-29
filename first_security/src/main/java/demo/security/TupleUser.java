@@ -1,19 +1,23 @@
 package demo.security;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import act.cli.Command;
 import act.cli.Required;
-import act.db.morphia.MorphiaAdaptiveRecord;
-import act.db.morphia.MorphiaDao;
+import act.db.ebean.EbeanDao;
 import act.validation.Password;
 
-public class TupleUser extends MorphiaAdaptiveRecord<TupleUser> {
+@Entity
+@Table(name = "USER")
+public class TupleUser {
 
 	public String userId;
 	@Password
 	public char[] password;
 
 
-	public static class Dao extends MorphiaDao<TupleUser> {
+	public static class Dao extends EbeanDao<String, TupleUser> {
 
         @Command(name = "user.create", help = "Create new user")
         public void createUser(
